@@ -146,8 +146,8 @@ export default function DetallePaciente() {
                 <tr key={sesion.id} className="border-b">
                   <td className="p-3">{sesion.fecha}</td>
                   <td className="p-3">{sesion.hora}</td>
-                  <td className="p-3">{sesion.terapeuta_id}</td>
-                  <td className="p-3">{sesion.tratamiento_id}</td>
+                  <td className="p-3">{sesion.terapeutaNombre ?? "—"}</td>
+                  <td className="p-3">{sesion.tratamientoNombre ?? "—"}</td>
                   <td className="p-3">{sesion.estado}</td>
 
                   <td className="p-3 flex gap-2">
