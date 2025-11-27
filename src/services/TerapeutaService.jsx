@@ -1,28 +1,29 @@
-import axios from "axios";
-
-const API_URL = "http://localhost:8080/api/terapeutas";
+import api from "./api";
 
 class TerapeutaService {
   obtenerTodos() {
-    return axios.get(API_URL);
+    return api.get("/terapeutas");
   }
 
   obtenerPorId(id) {
-    return axios.get(`${API_URL}/${id}`);
+    return api.get(`/terapeutas/${id}`);
   }
 
   guardar(terapeuta) {
-    return axios.post(API_URL, terapeuta);
+    return api.post("/terapeutas", terapeuta);
   }
 
   actualizar(id, terapeuta) {
-    return axios.put(`${API_URL}/${id}`, terapeuta);
+    return api.put(`/terapeutas/${id}`, terapeuta);
   }
 
   eliminar(id) {
-    return axios.delete(`${API_URL}/${id}`);
+    return api.delete(`/terapeutas/${id}`);
   }
 }
 
 export default new TerapeutaService();
+
+
+
 

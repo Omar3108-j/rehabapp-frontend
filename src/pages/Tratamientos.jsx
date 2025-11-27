@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Activity, PlusCircle, Trash2, Edit3, Eye, Search } from "lucide-react";
+import api from "../services/api";
 
 export default function Tratamientos() {
   const [tratamientos, setTratamientos] = useState([]);
@@ -11,27 +12,27 @@ export default function Tratamientos() {
     cargarTratamientos();
   }, []);
 
-  const cargarTratamientos = () => {
-    fetch("http://localhost:8080/api/tratamientos")
-      .then((res) => res.json())
-      .then((data) => setTratamientos(data))
-      .catch((err) => console.error("Error al cargar tratamientos:", err));
-  };
+  
 
-  const eliminarTratamiento = (id) => {
-    if (window.confirm("¿Seguro que deseas eliminar este tratamiento?")) {
-      fetch(`http://localhost:8080/api/tratamientos/${id}`, { method: "DELETE" })
-        .then((res) => {
-          if (!res.ok) throw new Error("Error al eliminar tratamiento");
-          alert("🗑️ Tratamiento eliminado correctamente");
-          cargarTratamientos();
-        })
-        .catch((err) => {
-          console.error(err);
-          alert("❌ Error al eliminar tratamiento");
-        });
-    }
-  };
+// cargar tratamientos
+const cargarTratamientos = () => {
+  api.get("/tratamientos")
+    .then(res => setTratamientos(res.data))
+    .catch(err => console.error("Error al cargar tratamientos:", err));
+};
+
+// eliminar tratamiento
+const eliminarTratamiento = (id) => {
+  if (window.confirm("¿Eliminar tratamiento?")) {
+    api.delete(`/tratamientos/${id}`)
+      .then(() => {
+        alert("🗑 Tratamiento eliminado");
+        cargarTratamientos();
+      })
+      .catch(() => alert("❌ Error al eliminar"));
+  }
+};
+
 
   const tratamientosFiltrados = tratamientos.filter((t) =>
     `${t.nombre} ${t.descripcion}`

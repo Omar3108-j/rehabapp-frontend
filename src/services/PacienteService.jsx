@@ -1,15 +1,20 @@
-import axios from "axios";
+import api from "./api";
 
-const API_URL = "http://localhost:8080/api/pacientes";
+class PacienteService {
+  obtenerTodos() {
+    return api.get("/pacientes");
+  }
 
-export const getPacientes = async () => {
-  return await axios.get(API_URL);
-};
+  crear(paciente) {
+    return api.post("/pacientes", paciente);
+  }
 
-export const createPaciente = async (paciente) => {
-  return await axios.post(API_URL, paciente);
-};
+  eliminar(id) {
+    return api.delete(`/pacientes/${id}`);
+  }
+}
 
-export const deletePaciente = async (id) => {
-  return await axios.delete(`${API_URL}/${id}`);
-};
+export default new PacienteService();
+
+
+

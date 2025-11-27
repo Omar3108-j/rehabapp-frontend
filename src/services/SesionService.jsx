@@ -1,32 +1,30 @@
-import axios from "axios";
-
-const API_URL = "http://localhost:8080/api/sesiones";
+import api from "./api";
 
 class SesionService {
-  
   obtenerTodas() {
-    return axios.get(API_URL);
+    return api.get("/sesiones");
   }
 
   obtenerPorId(id) {
-    return axios.get(`${API_URL}/${id}`);
+    return api.get(`/sesiones/${id}`);
   }
 
-  obtenerPorPaciente(pacienteId) {
-    return axios.get(`${API_URL}/paciente/${pacienteId}`);
+  obtenerPorPaciente(idPaciente) {
+    return api.get(`/sesiones/paciente/${idPaciente}`);
   }
 
   crearSesion(sesion) {
-    return axios.post(API_URL, sesion);
+    return api.post("/sesiones", sesion);
   }
 
   actualizarSesion(id, sesion) {
-    return axios.put(`${API_URL}/${id}`, sesion);
+    return api.put(`/sesiones/${id}`, sesion);
   }
 
   eliminarSesion(id) {
-    return axios.delete(`${API_URL}/${id}`);
+    return api.delete(`/sesiones/${id}`);
   }
 }
 
 export default new SesionService();
+

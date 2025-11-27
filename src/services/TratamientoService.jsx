@@ -1,27 +1,27 @@
-import axios from "axios";
-
-const API_URL = "http://localhost:8080/api/tratamientos";
+import api from "./api";
 
 class TratamientoService {
   obtenerTodos() {
-    return axios.get(API_URL);
+    return api.get("/tratamientos");
   }
 
   obtenerPorId(id) {
-    return axios.get(`${API_URL}/${id}`);
+    return api.get(`/tratamientos/${id}`);
   }
 
   guardar(tratamiento) {
-    return axios.post(API_URL, tratamiento);
+    return api.post("/tratamientos", tratamiento);
   }
 
   actualizar(id, tratamiento) {
-    return axios.put(`${API_URL}/${id}`, tratamiento);
+    return api.put(`/tratamientos/${id}`, tratamiento);
   }
 
   eliminar(id) {
-    return axios.delete(`${API_URL}/${id}`);
+    return api.delete(`/tratamientos/${id}`);
   }
 }
 
 export default new TratamientoService();
+
+

@@ -1,37 +1,39 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Users, PlusCircle, Trash2, Edit3, Eye, Search } from "lucide-react";
+import api from "../services/api";
 
 export default function Pacientes() {
   const [pacientes, setPacientes] = useState([]);
   const [busqueda, setBusqueda] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    cargarPacientes();
-  }, []);
+  
 
-  const cargarPacientes = () => {
-    fetch("http://localhost:8080/api/pacientes")
-      .then((res) => res.json())
-      .then((data) => setPacientes(data))
-      .catch((err) => console.error("Error al cargar pacientes:", err));
-  };
+useEffect(() => {
+  cargarPacientes();
+}, []);
 
-  const eliminarPaciente = (id) => {
-    if (window.confirm("¿Seguro que deseas eliminar este paciente?")) {
-      fetch(`http://localhost:8080/api/pacientes/${id}`, { method: "DELETE" })
-        .then((res) => {
-          if (!res.ok) throw new Error("Error al eliminar paciente");
-          alert("🗑️ Paciente eliminado correctamente");
-          cargarPacientes();
-        })
-        .catch((err) => {
-          console.error(err);
-          alert("❌ Error al eliminar paciente");
-        });
-    }
-  };
+const cargarPacientes = () => {
+  api.get("/pacientes")
+    .then(res => setPacientes(res.data))
+    .catch(err => console.error("Error al cargar pacientes:", err));
+};
+
+const eliminarPaciente = (id) => {
+  if (window.confirm("¿Seguro que deseas eliminar este paciente?")) {
+    api.delete(`/pacientes/${id}`)
+      .then(() => {
+        alert("🗑️ Paciente eliminado correctamente");
+        cargarPacientes();
+      })
+      .catch(err => {
+        console.error(err);
+        alert("❌ Error al eliminar paciente");
+      });
+  }
+};
+
 
   const pacientesFiltrados = pacientes.filter((p) =>
     `${p.nombre} ${p.dni} ${p.telefono}`
